@@ -1,0 +1,21 @@
+# Compilation Java
+*.class
+out/
+target/
+build/
+
+# IntelliJ IDEA
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/shelf/
+.idea/copilot.data.migration.ask2agent.xml
+
+# Archives et installateurs (non liés au laboratoire)
+*.msi
+*.exe
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
