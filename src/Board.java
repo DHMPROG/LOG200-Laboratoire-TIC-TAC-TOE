@@ -40,21 +40,16 @@ class Board
         return moves;
     }
 
-
-    // retourne  100 pour une victoire
-    //          -100 pour une défaite
-    //           0   pour un match nul
-    // Ne pas changer la signature de cette méthode
-
     public boolean hasWon(Mark mark){
-        // Check rows and columns
+
         for (int i = 0; i < 3; i++) {
+            //Regarde les lignes et les colonnes pour voir si le joueur a gagné
             if ((board[i][0] == mark && board[i][1] == mark && board[i][2] == mark) ||
                 (board[0][i] == mark && board[1][i] == mark && board[2][i] == mark)) {
                 return true;
             }
         }
-        // Check diagonals
+       // regarde les diagonales pour voir si le joueur a gagné
         if ((board[0][0] == mark && board[1][1] == mark && board[2][2] == mark) ||
             (board[0][2] == mark && board[1][1] == mark && board[2][0] == mark)) {
             return true;
@@ -62,10 +57,16 @@ class Board
         return false;
     }
 
-    public int evaluate(Mark mark){
+    // retourne  100 pour une victoire
+    //          -100 pour une défaite
+    //           0   pour un match nul
+    // Ne pas changer la signature de cette méthode
 
-        if (true)return 100;
-        else if (false) return -100;
+    public int evaluate(Mark mark){
+        Mark oppenentMark = (mark == Mark.X) ? Mark.O : Mark.X;
+
+        if (hasWon(mark))return 100;
+        else if (hasWon(oppenentMark)) return -100;
         else return 0;
     }
 
