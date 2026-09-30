@@ -19,13 +19,53 @@ class CPUPlayer
     // Le constructeur reçoit en paramètre le
     // joueur MAX (X ou O)
     public CPUPlayer(Mark cpu){
+<<<<<<< Updated upstream
         this.cpuMark = cpu;
         this.opponentMark = (cpu == Mark.X) ? Mark.O : Mark.X;
+=======
+
+        this.cpuMark = cpu;
+        this.opponentMark = (cpu == Mark.X) ? Mark.O : Mark.X;
+
+>>>>>>> Stashed changes
     }
 
     // Ne pas changer cette méthode
     public int  getNumOfExploredNodes(){
         return numExploredNodes;
+    }
+
+    private int minMax(Board board, boolean isMax) {
+        numExploredNodes++;
+        int score = board.evaluate(cpuMark);
+
+        if (score == 100 || score == -100) {
+            return score;
+        }
+
+        ArrayList<Move> availableMoves = board.getAvailableMoves();
+
+        if (availableMoves.isEmpty()) {
+            return 0; // Draw
+        }
+
+        if (isMax) {
+            int bestScore = Integer.MIN_VALUE;
+            for (Move move : availableMoves) {
+                board.play(move, cpuMark);
+                bestScore = Math.max(bestScore, minMax(board, false));
+                board.play(move, Mark.EMPTY); // Undo move
+            }
+            return bestScore;
+        } else {
+            int bestScore = Integer.MAX_VALUE;
+            for (Move move : availableMoves) {
+                board.play(move, opponentMark);
+                bestScore = Math.min(bestScore, minMax(board, true));
+                board.play(move, Mark.EMPTY); // Undo move
+            }
+            return bestScore;
+        }
     }
 
     // Retourne la liste des coups possibles.  Cette liste contient
@@ -34,7 +74,28 @@ class CPUPlayer
     public ArrayList<Move> getNextMoveMinMax(Board board)
     {
         numExploredNodes = 0;
+        
+        ArrayList<Move> bestMoves = new ArrayList<>();
+        int bestScore = Integer.MIN_VALUE;
 
+        ArrayList<Move> availableMoves = board.getAvailableMoves();
+        
+        for(Move move : availableMoves) {
+
+            board.play(move, cpuMark);
+            int score = minMax(board, false);
+            board.play(move, Mark.EMPTY); // Undo move
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestMoves.clear();
+                bestMoves.add(move);
+            } else if (score == bestScore) {
+                bestMoves.add(move);
+            }
+        }
+
+        return bestMoves;
     }
 
     // Retourne la liste des coups possibles.  Cette liste contient
@@ -42,6 +103,8 @@ class CPUPlayer
     // ont le même score.
     public ArrayList<Move> getNextMoveAB(Board board){
         numExploredNodes = 0;
+
+        return null; // TODO: Implement Alpha-Beta pruning algorithm
 
     }
 
