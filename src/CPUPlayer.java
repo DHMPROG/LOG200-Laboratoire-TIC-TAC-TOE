@@ -19,15 +19,9 @@ class CPUPlayer
     // Le constructeur reçoit en paramètre le
     // joueur MAX (X ou O)
     public CPUPlayer(Mark cpu){
-<<<<<<< Updated upstream
-        this.cpuMark = cpu;
-        this.opponentMark = (cpu == Mark.X) ? Mark.O : Mark.X;
-=======
 
         this.cpuMark = cpu;
         this.opponentMark = (cpu == Mark.X) ? Mark.O : Mark.X;
-
->>>>>>> Stashed changes
     }
 
     // Ne pas changer cette méthode
