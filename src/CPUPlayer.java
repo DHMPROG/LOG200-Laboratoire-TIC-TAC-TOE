@@ -92,13 +92,61 @@ class CPUPlayer
         return bestMoves;
     }
 
-    // Retourne la liste des coups possibles.  Cette liste contient
+    // Retourne la liste des coups possibles. Cette liste contient
     // plusieurs coups possibles si et seuleument si plusieurs coups
     // ont le même score.
     public ArrayList<Move> getNextMoveAB(Board board){
         numExploredNodes = 0;
 
         return null; // TODO: Implement Alpha-Beta pruning algorithm
+
+    }
+
+    public int AlphaBeta(Board board, boolean isMaxTurn, int alpha, int beta) {
+        numExploredNodes++;
+
+        int score = board.evaluate(cpuMark);
+
+        if (score == 100 || score == -100 || board.getAvailableMoves().isEmpty()) {
+            return score;
+        }
+
+        if (isMaxTurn) {
+            int bestScore = Integer.MIN_VALUE;
+            for (Move move : board.getAvailableMoves()) {
+                board.play(move, cpuMark);
+                int scoreCPU = AlphaBeta(board, false, alpha, beta);
+                board.play(move, Mark.EMPTY);
+
+
+                bestScore = Math.max(bestScore, scoreCPU);
+                alpha = Math.max(alpha, bestScore);
+
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+            return bestScore;
+        }
+
+        else {
+            int bestScore = Integer.MAX_VALUE;
+            for (Move move : board.getAvailableMoves()) {
+                board.play(move, opponentMark);
+                int scoreOpponent = AlphaBeta(board, true, alpha, beta);
+                board.play(move, Mark.EMPTY);
+
+                bestScore = Math.min(bestScore, scoreOpponent);
+                beta = Math.min(beta, bestScore);
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+            return bestScore;
+
+
+        }
+
 
     }
 

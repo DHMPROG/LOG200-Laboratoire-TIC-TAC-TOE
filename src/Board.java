@@ -19,6 +19,11 @@ class Board
 
     }
 
+  public Mark getMark(int row, int col) {
+        return board[row][col];
+    }
+
+
     // Place la pièce 'mark' sur le plateau, à la
     // position spécifiée dans Move
     //
