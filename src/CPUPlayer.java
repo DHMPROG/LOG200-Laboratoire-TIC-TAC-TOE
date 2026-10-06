@@ -98,8 +98,23 @@ class CPUPlayer
     public ArrayList<Move> getNextMoveAB(Board board){
         numExploredNodes = 0;
 
-        return null; // TODO: Implement Alpha-Beta pruning algorithm
+        ArrayList<Move> bestMoves = new ArrayList<>();
+        int bestScore = Integer.MIN_VALUE;
 
+        for(Move move : board.getAvailableMoves()) {
+            board.play(move, cpuMark);
+            int score = AlphaBeta(board, false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            board.play(move, Mark.EMPTY);
+
+            if(score > bestScore) {
+                bestScore = score;
+                bestMoves.clear();
+                bestMoves.add(move);
+            } else if (score == bestScore) {
+                bestMoves.add(move);
+            }
+        }
+        return bestMoves;
     }
 
     public int AlphaBeta(Board board, boolean isMaxTurn, int alpha, int beta) {

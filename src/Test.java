@@ -104,6 +104,7 @@ public class Test {
 
         System.out.println("Explored nodes: "
                 + cpu.getNumOfExploredNodes());
+        compare("TEST 3", board, Mark.X);
     }
 
     // -------------------------------------------------------
@@ -138,6 +139,7 @@ public class Test {
 
         System.out.println("Explored nodes: "
                 + cpu.getNumOfExploredNodes());
+        compare("TEST 4", board, Mark.O);
     }
 
     // -------------------------------------------------------
@@ -172,6 +174,7 @@ public class Test {
 
         System.out.println("Explored nodes: "
                 + cpu.getNumOfExploredNodes());
+        compare("TEST 5", board, Mark.X);
     }
 
     // -------------------------------------------------------
@@ -205,6 +208,7 @@ public class Test {
 
         System.out.println("Explored nodes: "
                 + cpu.getNumOfExploredNodes());
+        compare("TEST 6", board, Mark.O);
     }
 
     // -------------------------------------------------------
@@ -235,6 +239,7 @@ public class Test {
 
         System.out.println("Explored nodes: "
                 + cpu.getNumOfExploredNodes());
+        compare("TEST 7", board, Mark.O);
     }
 
     // -------------------------------------------------------
@@ -263,6 +268,26 @@ public class Test {
 
         System.out.println("Explored nodes: "
                 + cpu.getNumOfExploredNodes());
+
+        compare("TEST 8", board, Mark.X);
+    }
+    
+    // -------------------------------------------------------
+    //Print all returned best moves
+    // -------------------------------------------------------
+    public static void compare(String name, Board board, Mark mark){
+        CPUPlayer cpu = new CPUPlayer(mark);
+        ArrayList<Move> mm = cpu.getNextMoveMinMax(board);
+        int nodesMM = cpu.getNumOfExploredNodes();
+        ArrayList<Move> ab = cpu.getNextMoveAB(board);
+        int nodesAB = cpu.getNumOfExploredNodes();
+
+        boolean same = mm.size() == ab.size();
+        for(int i=0; same && i <mm.size(); i++){
+                same = mm.get(i).getRow() == ab.get(i).getRow()
+                        && mm.get(i).getCol() == ab.get(i).getCol();
+        }
+        System.out.println(name + " -> MinMax: " + nodesMM + " noeuds, AB: " + nodesAB + " noeuds, memes coups: " + same);
     }
 
     // -------------------------------------------------------
